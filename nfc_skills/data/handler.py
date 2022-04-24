@@ -18,12 +18,19 @@ def split_train_and_test_data(
 
     :returns: A tuple with the train and test dataset
     """
+    data_frame["profile_id"] = data_frame["profile_id"].astype(
+        "category"
+    ).cat.codes
+    data_frame["skill_id"] = data_frame["skill_id"].astype(
+        "category"
+    ).cat.codes
     data_frame["rank_latest"] = data_frame.groupby(
         ["profile_id"],
     )["updated_at"].rank(method="first", ascending=False)
 
     train_data = data_frame[data_frame["rank_latest"] != 1]
     test_data = data_frame[data_frame["rank_latest"] == 1]
+    del data_frame
 
     train_data = train_data[["profile_id", "skill_id", "level"]]
     test_data = test_data[["profile_id", "skill_id", "level"]]

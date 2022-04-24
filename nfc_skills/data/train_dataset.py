@@ -21,7 +21,7 @@ class SkillsTrainDataset(Dataset):
     def __len__(self) -> int:
         return len(self.users)
 
-    def __getitem__(self, idx) -> tuple[str, str, int]:
+    def __getitem__(self, idx) -> tuple[int, int, int]:
         return self.users[idx], self.items[idx], self.labels[idx]
 
     @staticmethod
