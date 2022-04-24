@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "nfc_skills"
+version = "0.1.0"
+description = ""
+authors = ["Topi99 <topiltzin.hernandez@wizeline.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^1.4.2"
+numpy = "^1.22.3"
+torch = "^1.11.0"
+pytorch-lightning = "^1.6.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
