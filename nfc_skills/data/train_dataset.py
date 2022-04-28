@@ -12,7 +12,7 @@ class SkillsTrainDataset(Dataset):
     """
 
     def __init__(
-        self, dataframe: pd.DataFrame, all_skill_ids: list[str]
+        self, dataframe: pd.DataFrame, all_skill_ids: np.ndarray
     ) -> None:
         self.users, self.items, self.labels = self.get_dataset(
             dataframe, all_skill_ids
@@ -26,7 +26,7 @@ class SkillsTrainDataset(Dataset):
 
     @staticmethod
     def get_dataset(
-        dataframe: pd.DataFrame, all_skill_ids: list[str]
+        dataframe: pd.DataFrame, all_skill_ids: np.ndarray
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """Transforms a given dataframe to tuple of useful pytorch Tensors.
 
