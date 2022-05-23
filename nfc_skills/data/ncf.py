@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from . import SkillsTrainDataset
 
 
-class SimpleNFC(pl.LightningModule):
+class SimpleNCF(pl.LightningModule):
     """Simple Neural Collaborative Filtering with MLP"""
 
     def __init__(
@@ -27,8 +27,6 @@ class SimpleNFC(pl.LightningModule):
         self.item_embedding = nn.Embedding(num_embeddings=num_items, embedding_dim=8)
         self.fc1 = nn.Linear(in_features=16, out_features=32)
         self.fc2 = nn.Linear(in_features=32, out_features=16)
-        # self.fc3 = nn.Linear(in_features=64, out_features=32)
-        # self.fc4 = nn.Linear(in_features=32, out_features=16)
         self.output = nn.Linear(in_features=16, out_features=1)
         self.ratings = ratings
         self.all_skill_ids = all_skill_ids
@@ -50,6 +48,7 @@ class SimpleNFC(pl.LightningModule):
         user_input, item_input, labels = batch
         predicted_labels = self(user_input, item_input)
         loss = nn.BCELoss()(predicted_labels, labels.view(-1, 1).float())
+        self.log("loss", loss, on_step=True, on_epoch=True)
         return loss
 
     def configure_optimizers(self) -> Optimizer:

@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from . import SkillsTrainDataset
 
 
-class GMFNFC(pl.LightningModule):
+class GMFNCF(pl.LightningModule):
     """Neural Collaborative Filtering with Generalized Matrix Factorization"""
 
     def __init__(
@@ -35,9 +35,9 @@ class GMFNFC(pl.LightningModule):
         self.item_embedding_gmf = nn.Embedding(
             num_embeddings=num_items, embedding_dim=8
         )
-        self.fc1 = nn.Linear(in_features=16, out_features=32)
-        self.fc2 = nn.Linear(in_features=32, out_features=16)
-        self.output = nn.Linear(in_features=24, out_features=1)
+        self.fc1 = nn.Linear(in_features=16, out_features=64)
+        self.fc2 = nn.Linear(in_features=64, out_features=32)
+        self.output = nn.Linear(in_features=40, out_features=1)
         self.ratings = ratings
         self.all_skill_ids = all_skill_ids
 
@@ -64,6 +64,7 @@ class GMFNFC(pl.LightningModule):
         user_input, item_input, labels = batch
         predicted_labels = self(user_input, item_input)
         loss = nn.BCELoss()(predicted_labels, labels.view(-1, 1).float())
+        self.log("loss", loss, on_step=True, on_epoch=True)
         return loss
 
     def configure_optimizers(self) -> Optimizer:
